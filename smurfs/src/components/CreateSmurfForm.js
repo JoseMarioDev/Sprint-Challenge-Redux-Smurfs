@@ -14,7 +14,7 @@ class CreateSmurfForm extends React.Component {
             [event.target.name]: event.target.value,
         });
     }
-    hadnleAddNewSmurf = (event) => {
+    handleAddNewSmurf = (event) => {
         event.preventDefault();
 
         const smurf = this.state;
@@ -25,7 +25,7 @@ class CreateSmurfForm extends React.Component {
     render(){
         return (
             <div>
-                <form onSubmit={this.hadnleAddNewSmurf}>
+                <form onSubmit={this.handleAddNewSmurf}>
                     <input name ='name' value={this.state.name} type='text' onChange={this.handleInputChange} placeholder='Name'/>
                     <input name ='age' value={this.state.age} type='number' onChange={this.handleInputChange} placeholder='Age'/>
                     <input name ='height' value={this.state.height} type='text' onChange={this.handleInputChange} placeholder='Height'/>
