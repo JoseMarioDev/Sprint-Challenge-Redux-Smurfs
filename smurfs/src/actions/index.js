@@ -2,7 +2,14 @@
   Action Types Go Here!
   Be sure to export each action type so you can pull it into your reducer
 */
+import axios from 'axios';
 
+export const FETCHING_SMURFS = 'FETCHING_SMURFS';
+export const FETCH_SMURF_SUCCESS = 'FETCH_SMURF_SUCCESS';
+export const FETCH_SMURF_FAILURE = 'FETCH_SMURF_FAILURE';
+export const ADDING_SMURF = 'ADDING_SMURF';
+export const SMURF_ADDED = 'SMURF_ADDED';
+export const ADD_SMURF_ERROR = 'ADD_SMURF_ERROR';
 /*
   For this project you'll need at least 2 action creators for the main portion,
    and 2 more for the stretch problem.
@@ -13,3 +20,27 @@
    U - updateSmurf
    D - deleteSmurf
 */
+export const fetchSmurfs = () => dispatch => {
+  dispatch({ type: FETCHING_SMURFS });
+  axios
+    .get(`http://localhost:3333/smurfs`)
+    .then(response => {
+      dispatch({ type: FETCH_SMURF_SUCCESS, payload: response.data });
+    })
+    .catch(error => {
+      dispatch({ type: FETCH_SMURF_FAILURE, payload: error });
+    });
+};
+
+export const addNewSmurf = newSmurf => dispatch => {
+  dispatch({ type: ADDING_SMURF });
+
+  axios
+    .post('http://localhost:3333/smurfs', newSmurf)
+    .then(response => {
+      dispatch({ type: SMURF_ADDED, payload: response.data });
+    })
+    .catch(error => {
+      dispatch({ type: ADD_SMURF_ERROR, payload: error });
+    });
+};
