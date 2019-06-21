@@ -5,7 +5,7 @@ import {
 } from '../actions';
 
 const initialState = {
-  smrufs: [],
+  smurfs: [],
   fetchingSmurfs: false,
   addingSmurf: false,
   error: null,
