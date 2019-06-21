@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import SmurfForm from './SmurfForm';
 import Smurfs from './Smurfs';
+import CreateSmurfForm from './CreateSmurfForm';
 /*
  to wire this component up you're going to need a few things.
  I'll let you do this part on your own. 
@@ -11,9 +11,9 @@ import Smurfs from './Smurfs';
 class App extends Component {
   render() {
     return (
-      <div className='App'>
-        <SmurfForm />
+      <div className="App">
         <Smurfs />
+        <CreateSmurfForm />
       </div>
     );
   }

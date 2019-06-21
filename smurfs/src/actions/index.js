@@ -1,24 +1,46 @@
+/* 
+  Action Types Go Here!
+  Be sure to export each action type so you can pull it into your reducer
+*/
 import axios from 'axios';
 
-export const FETCH_SMURF_START = 'FETCH_SMURF_START';
+export const FETCHING_SMURFS = 'FETCHING_SMURFS';
 export const FETCH_SMURF_SUCCESS = 'FETCH_SMURF_SUCCESS';
-export const FETCH_SMURF_ERROR = 'FETCH_SMURF_ERROR';
-
-let nextSmurfId = 0;
-
-export const addSmurf = text => ({
-  type: 'ADD_SMURF',
-  id: nextSmurfId++,
-  text,
-});
-
-export const getSmurfs = name => dispatch => {
-  dispatch({ type: FETCH_SMURF_START });
+export const FETCH_SMURF_FAILURE = 'FETCH_SMURF_FAILURE';
+export const ADDING_SMURF = 'ADDING_SMURF';
+export const SMURF_ADDED = 'SMURF_ADDED';
+export const ADD_SMURF_ERROR = 'ADD_SMURF_ERROR';
+/*
+  For this project you'll need at least 2 action creators for the main portion,
+   and 2 more for the stretch problem.
+   Be sure to include action types for each type of action creator. Also, be sure to mind
+     the "pending" states like, fetching, creating, updating and deleting.
+   C - addSmurf
+   R - getSmurfs
+   U - updateSmurf
+   D - deleteSmurf
+*/
+export const fetchSmurfs = () => dispatch => {
+  dispatch({ type: FETCHING_SMURFS });
   axios
-    .get('localhost:3333/smurfs')
-    .then(res => {
-      console.log(res);
-      dispatch({ type: FETCH_SMURF_SUCCESS, payload: res.data });
+    .get(`http://localhost:3333/smurfs`)
+    .then(response => {
+      dispatch({ type: FETCH_SMURF_SUCCESS, payload: response.data });
     })
-    .catch(err => dispatch({ type: FETCH_SMURF_ERROR }));
+    .catch(error => {
+      dispatch({ type: FETCH_SMURF_FAILURE, payload: error });
+    });
+};
+
+export const addNewSmurf = newSmurf => dispatch => {
+  dispatch({ type: ADDING_SMURF });
+
+  axios
+    .post('http://localhost:3333/smurfs', newSmurf)
+    .then(response => {
+      dispatch({ type: SMURF_ADDED, payload: response.data });
+    })
+    .catch(error => {
+      dispatch({ type: ADD_SMURF_ERROR, payload: error });
+    });
 };

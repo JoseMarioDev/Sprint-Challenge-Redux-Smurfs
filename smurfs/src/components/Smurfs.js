@@ -1,14 +1,36 @@
 import React from 'react';
-import Smurf from './Smurf';
+import { connect } from 'react-redux';
+import { fetchSmurfs } from '../actions';
 
-const Smurfs = props => {
-  return (
-    <ul>
-      {props.smurfs.map(smurf => {
-        return <Smurf key={smurf.name} smurf={smurf} />;
-      })}
-    </ul>
-  );
+class Smurfs extends React.Component {
+    constructor(){
+        super();
+    }
+
+    componentDidMount() {
+        this.props.fetchSmurfs();
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.smurfs.map(smurf =>
+                    <div>
+                        <h1>{smurf.name}</h1>
+                        <h3>{smurf.age}</h3>
+                        <h3>{smurf.height}</h3>
+                    </div>
+                )}
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        smurfs: state.smurfs,
+        fetchingSmurfs: state.fetchingSmurfs
+    };
 };
 
-export default Smurfs;
+export default connect(mapStateToProps, { fetchSmurfs })(Smurfs);
